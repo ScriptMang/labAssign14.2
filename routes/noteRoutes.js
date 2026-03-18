@@ -18,6 +18,18 @@ router.get('/', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/:id', async (req, res) => {
+  try {
+    const notes = await Note.find(
+        {user: { $eq: req.user._id},
+        _id: {$eq: req.params.id}}
+    );
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
  
 // POST /api/notes - Create a new note
 router.post('/', async (req, res) => {
